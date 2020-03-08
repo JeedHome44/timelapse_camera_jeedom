@@ -1,0 +1,30 @@
+$Hostname = 'IP_FIXE_JEEDOM'; //Adresse IP de la machine sur laquelle sont stocké les captures
+$Username = 'USER_SSH'; //Identifiant de connection SSH
+$Password ='PASSWORD_SSH'; //Mot de passe de connection SSH
+$Lien_Enreg = '/var/www/html/plugins/camera/data/records/NUM_DOSSIER_CAMERA/'; //Lien absolue (depuis la racine) vers les enregistrement
+$Commande_SSH = 'sudo rm -f'; //Commande SSH pour la suppression des fichiers
+$Command_1 = $Commande_SSH." ".$Lien_Enreg."*image1*" ; //Definition de la commande SSH
+$Command_2 = $Commande_SSH." ".$Lien_Enreg."*image2*" ; //Definition de la commande SSH
+$Command_3 = $Commande_SSH." ".$Lien_Enreg."*image3*" ; //Definition de la commande SSH
+$Command_4 = $Commande_SSH." ".$Lien_Enreg."*image4*" ; //Definition de la commande SSH
+$Command_5 = $Commande_SSH." ".$Lien_Enreg."*image5*" ; //Definition de la commande SSH
+$Command_6 = $Commande_SSH." ".$Lien_Enreg."*image6*" ; //Definition de la commande SSH
+$Command_7 = $Commande_SSH." ".$Lien_Enreg."*image7*" ; //Definition de la commande SSH
+$Command_8 = $Commande_SSH." ".$Lien_Enreg."*image8*" ; //Definition de la commande SSH
+$Command_9 = $Commande_SSH." ".$Lien_Enreg."*image9*" ; //Definition de la commande SSH
+$Command = $Command_1." && ".$Command_2." && ".$Command_3." && ".$Command_4." && ".$Command_5." && ".$Command_6." && ".$Command_7." && ".$Command_8." && ".$Command_9."";
+$scenario->setData('commande ssh image NOM_CAMERA',$Command);
+
+$ssh = ssh2_connect($Hostname, 22);
+ssh2_auth_password($ssh, $Username, $Password);
+$stream = ssh2_exec($ssh, $Command);
+stream_set_blocking($stream, true);
+
+//renvoi la sortie de la commande si besoin
+$response = '';
+while($buffer = fread($stream, 4096)) {
+$response .= $buffer;
+}
+
+fclose($stream);
+echo $response;
