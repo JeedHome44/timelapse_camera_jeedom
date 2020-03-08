@@ -1,10 +1,10 @@
 $Hostname = 'IP_FIXE_DE_VOTRE_JEEDOM'; //Adresse IP de la machine sur laquelle sont stocké les captures
 $Username = 'USER_SSH'; //Identifiant de connection SSH
 $Password ='PSSAWORD_SSH'; //Mot de passe de connection SSH
-$Nom_Camera = 'NOM_DE_LA_CAMERA'; //Nom de la caméra, utiliser pour nommer l'enregistrement
+$Nom_Camera = 'NOM_CAMERA'; //Nom de la caméra, utiliser pour nommer l'enregistrement
 $Format_Enregistrement = 'mp4'; // Format de l'enregistrement
 $Nbr_Img_Sec = '5'; //Nombre d'images par seconde de la vidéo
-$Lien_Enreg = '/var/www/html/plugins/camera/data/records/NUM_DU_DOSSIER_DE_LA_CAMERA/'; //Lien absolue (depuis la racine) vers les enregistrement
+$Lien_Enreg = '/var/www/html/plugins/camera/data/records/NUM_DOSSIER_CAMERA/'; //Lien absolue (depuis la racine) vers les enregistrement
 $Heure_Precedente = date('H',strtotime("-1 hours")); //Calcul de l'heure précédente
 $Jour_Sans_Tirait = date('omd',strtotime("-1 hours")) ; //Calcul de la date du jour moins 1 heure
 $Jour_Ajout_Tirait = substr_replace($Jour_Sans_Tirait, "-", 4, 0); // Ajout d'un tirait entre l'année et le mois
@@ -15,8 +15,8 @@ $Commande_SSH_2 = 'sudo ffmpeg -f image2 -i'; //Commande SSH pour la fusionner l
 $Command_1 = $Commande_SSH_1." ".$Lien_Enreg." "; //Definition de la commande SSH 1
 $Command_2 = $Commande_SSH_2." image%d.jpg -framerate ".$Nbr_Img_Sec." -pix_fmt yuv420p ".$Nom_Enregistrement." -y"; //Definition de la commande SSH 2
 $Command = $Command_1." && ".$Command_2."";
-$scenario->setData('Commande SSH Video1 NOM_DE_LA_CAMERA',$Command_1); 
-$scenario->setData('Commande SSH Video2 NOM_DE_LA_CAMERA',$Command_2);
+$scenario->setData('Commande SSH Video1 NOM_CAMERA',$Command_1); 
+$scenario->setData('Commande SSH Video2 NOM_CAMERA',$Command_2);
 
 $ssh = ssh2_connect($Hostname, 22);
 ssh2_auth_password($ssh, $Username, $Password);
