@@ -5,7 +5,7 @@ Explication des scénarios pour réussir à faire des timelapse avec les caméra
 - Faire ensuite les étapes 1, 2, 3, 4 pour toutes vos caméras. Il faudra donc faire un seul scénario pour chaque étape avec autant de bloc Code que de caméras.
 - Si vous avez un serveur NAS sur lequel vous voulez mettre les vidéos, 2 choix s'offre à vous:
     - Faire juste une synchronisation basique via la bloc code 5.1 pour chaque caméra.
-    - Faire une copie de chaque vidéo sur le NAS en suivant les étapes 5.2, 6, 7 et 8.
+    - Faire une copie de chaque vidéo sur le NAS et les organiser par dossier par jour en suivant les étapes 5.2, 6, 7 et 8.
     
 Pour enchainer les différents scénario, mettre l'étape 1 avec un déclenchement chaque heure à XX:00.
 A la fin de l'étape 1 lancer l'étape 2 quand la 1 est fini et ainsi de suite.
