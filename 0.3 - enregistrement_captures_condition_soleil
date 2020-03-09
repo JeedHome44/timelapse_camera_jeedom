@@ -1,0 +1,30 @@
+- Nom du scénario : Enregistrement NOM_CAMERA
+- Objet parent : JPIECE
+- Mode du scénario : provoke
+    - Evènement : #[Caméras][NOM_CAMERA][Mouvement]#
+
+Enregistre une vidéo si mouvement dans PIECE toutes les 1 sec si soleil levé et toutes les 2 secondes si soleil couché
+
+    
+    SI #[Caméras][NOM_CAMERA][Mouvement]# == 0
+    ALORS
+         
+        SI #[Caméras][NOM_CAMERA][Status enregistrement]# == 1
+        ALORS
+         #[Caméras][NOM_CAMERA][Arrêter enregistrement]# - Options : {"enable":"1","background":"0"}
+        SINON
+    SINON
+         
+        SI #[Général][ZONE_GEOGRAPHIQUE][Etat du soleil]# == 1
+        ALORS
+             
+            SI #[Caméras][NOM_CAMERA][Status enregistrement]# == 0
+            ALORS
+             #[Caméras][NOM_CAMERA][Enregistrer]# - Options : {"enable":"1","background":"0","title":"","message":""}
+            SINON
+        SINON
+             
+            SI #[Caméras][NOM_CAMERA][Status enregistrement]# == 0
+            ALORS
+             #[Caméras][NOM_CAMERA][Enregistrer]# - Options : {"enable":"1","background":"0","title":"delay=2","message":""}
+            SINON
