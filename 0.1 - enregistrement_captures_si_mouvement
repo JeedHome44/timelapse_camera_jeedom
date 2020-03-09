@@ -1,0 +1,25 @@
+- Nom du scénario : 0 - Enregistrement Caméra NOM_CAMERA
+- Objet parent : PIECE
+- Mode du scénario : provoke
+    - Evènement : #[Caméras][NOM_CAMERA][Mouvement]#
+
+Enregistre une vidéo si mouvement dans PIECE
+
+    
+    SI #[Caméras][NOM_CAMERA][Mouvement]# == 0
+    ALORS
+         
+        SI #[Caméras][NOM_CAMERA][Status enregistrement]# == 1
+        ALORS
+         #[Caméras][NOM_CAMERA][Arrêter enregistrement]# - Options : {"enable":"1","background":"0"}
+        SINON
+    SINON
+         
+        SI #[Maison][Caméras][Séjour]# == 1
+        ALORS
+             
+            SI #[Caméras][NOM_CAMERA][Status enregistrement]# == 0
+            ALORS
+             #[Caméras][NOM_CAMERA][Enregistrer]# - Options : {"enable":"1","background":"0","title":"","message":""}
+            SINON
+        SINON
