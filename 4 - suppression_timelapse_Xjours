@@ -12,14 +12,4 @@ $scenario->setData('commande ssh camera NOM_CAMERA',$Command);
 
 $ssh = ssh2_connect($Hostname, 22);
 ssh2_auth_password($ssh, $Username, $Password);
-$stream = ssh2_exec($ssh, $Command);
-stream_set_blocking($stream, true);
-
-//renvoi la sortie de la commande si besoin
-$response = '';
-while($buffer = fread($stream, 4096)) {
-$response .= $buffer;
-}
-
-fclose($stream);
-echo $response;
+ssh2_exec($ssh, $Command);
