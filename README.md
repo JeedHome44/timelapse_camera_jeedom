@@ -11,7 +11,7 @@ Pour enchainer les différents scénario, mettre l'étape 1 avec un déclencheme
 A la fin de l'étape 1 lancer l'étape 2 quand la 1 est fini et ainsi de suite.
 Pour l'étape 4 ou/et 8, lancez les chaque jour à 00:30 par exemple.
     
-Pensez à bien remplacer des les blocs code:
+Pensez à bien remplacer dans les blocs code:
 - IP_FIXE_JEEDOM
 - NOM_CAMERA
 - USER_SSH
