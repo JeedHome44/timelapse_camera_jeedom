@@ -20,4 +20,3 @@ $response .= $buffer;
 
 fclose($stream);
 echo $response;
-
