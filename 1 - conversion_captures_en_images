@@ -2,9 +2,13 @@ $Hostname = 'IP_FIXE_JEEDOM'; //Adresse IP de la machine sur laquelle sont stock
 $Username = 'USER_SSH'; //Identifiant de connection SSH
 $Password ='PASSWORD_SSH'; //Mot de passe de connection SSH
 $Lien_Enreg = '/var/www/html/plugins/camera/data/records/NUM_DOSSIER_CAMERA/'; //Lien absolue (depuis la racine) vers les enregistrement
-$Command_1 = "sudo chmod -R 777 ".$Lien_Enreg.""; //Commande SSF pour accorder les droits complets
-$Command_2 = "cd ".$Lien_Enreg.""; //Commande SSF pour être dans le bon dossier
-$Command_3 = 'sudo ls -v *.jpg | cat -n | while read n f; do mv -n "$f" "image$n.jpg"; done'; //Commande SSH pour renommer les images
+$Heure_Precedente = date('H',strtotime("-1 hours")); //Calcul de l'heure précédente
+$Jour_Sans_Tirait = date('omd',strtotime("-1 hours")) ; //Calcul de la date du jour moins 1 heure
+$Jour_Ajout_Tirait = substr_replace($Jour_Sans_Tirait, "-", 4, 0); // Ajout d'un tirait entre l'année et le mois
+$Jour_Avec_Tirait = substr_replace($Jour_Ajout_Tirait, "-", 7, 0); // Ajout d'un tirait entre le mois et le jour
+$Command_1 = "sudo chmod -R 777 ".$Lien_Enreg.""; //Commande SSH pour accorder les droits complets
+$Command_2 = "cd ".$Lien_Enreg.""; //Commande SSH pour être dans le bon dossier
+$Command_3 = 'sudo ls -v *'.$Jour_Avec_Tirait.'_'.$Heure_Precedente.'*.jpg | cat -n | while read n f; do mv -n "$f" "image$n.jpg"; done'; //Commande SSH pour renommer les images
 $Command = $Command_1." && ".$Command_2." && ".$Command_3."";
 $scenario->setData('commande ssh rename NOM_CAMERA',$Command);
 
