@@ -1,6 +1,3 @@
-$Hostname = 'IP_FIXE_JEEDOM'; //Adresse IP de la machine sur laquelle sont stocké les captures
-$Username = 'USER_SSH'; //Identifiant de connection SSH
-$Password ='PASSWORD_SSH'; //Mot de passe de connection SSH
 $Lien_Enreg = '/var/www/html/plugins/camera/data/records/NUM_DOSSIER_CAMERA/'; //Lien absolue (depuis la racine) vers les enregistrement
 $Lien_NAS = '/media/surveillance/NOM_CAMERA/'; //Lien absolue (depuis la racine) vers le dossier partagé du NAS
 $Heure_Precedente = date('H',strtotime("-1 hours")); //Calcul de l'heure précédente
@@ -9,18 +6,6 @@ $Jour_Ajout_Tirait = substr_replace($Jour_Sans_Tirait, "-", 4, 0); // Ajout d'un
 $Jour_Avec_Tirait = substr_replace($Jour_Ajout_Tirait, "-", 7, 0); // Ajout d'un tirait entre le mois et le jour
 $Commande_SSH = 'sudo cp -a'; //Commande SSH pour la synchronisation des vidéos
 $Command = $Commande_SSH." ".$Lien_Enreg."*".$Jour_Avec_Tirait."_Vidéo".$Heure_Precedente."*.mp4 ".$Lien_NAS.""; //Definition de la commande SSH
-$scenario->setData('commande ssh nas NOM_CAMERA',$Command);
+$scenario->setLog($Command);
 
-$ssh = ssh2_connect($Hostname, 22);
-ssh2_auth_password($ssh, $Username, $Password);
-$stream = ssh2_exec($ssh, $Command);
-stream_set_blocking($stream, true);
-
-//renvoi la sortie de la commande si besoin
-$response = '';
-while($buffer = fread($stream, 4096)) {
-$response .= $buffer;
-}
-
-fclose($stream);
-echo $response;
+exec($Command);
