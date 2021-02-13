@@ -1,6 +1,3 @@
-$Hostname = 'IP_FIXE_DE_VOTRE_JEEDOM'; //Adresse IP de la machine sur laquelle sont stocké les captures
-$Username = 'USER_SSH'; //Identifiant de connection SSH
-$Password ='PSSAWORD_SSH'; //Mot de passe de connection SSH
 $Nom_Camera = 'NOM_CAMERA'; //Nom de la caméra, utiliser pour nommer l'enregistrement
 $Format_Enregistrement = 'mp4'; // Format de l'enregistrement
 $Nbr_Img_Sec = '5'; //Nombre d'images par seconde de la vidéo
@@ -15,19 +12,6 @@ $Commande_SSH_2 = 'sudo ffmpeg -f image2 -i'; //Commande SSH pour la fusionner l
 $Command_1 = $Commande_SSH_1." ".$Lien_Enreg." "; //Definition de la commande SSH 1
 $Command_2 = $Commande_SSH_2." image%d.jpg -framerate ".$Nbr_Img_Sec." -pix_fmt yuv420p ".$Nom_Enregistrement." -y"; //Definition de la commande SSH 2
 $Command = $Command_1." && ".$Command_2."";
-$scenario->setData('Commande SSH Video1 NOM_CAMERA',$Command_1); 
-$scenario->setData('Commande SSH Video2 NOM_CAMERA',$Command_2);
+$scenario->setLog($Command);
 
-$ssh = ssh2_connect($Hostname, 22);
-ssh2_auth_password($ssh, $Username, $Password);
-$stream = ssh2_exec($ssh, $Command);
-stream_set_blocking($stream, true);
-
-//renvoi la sortie de la commande si besoin
-$response = '';
-while($buffer = fread($stream, 4096)) {
-$response .= $buffer;
-}
-
-fclose($stream);
-echo $response;
+exec($Command);
