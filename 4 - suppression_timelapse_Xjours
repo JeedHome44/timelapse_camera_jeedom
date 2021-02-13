@@ -1,6 +1,3 @@
-$Hostname = 'IP_FIXE_JEEDOM'; //Adresse IP de la machine sur laquelle sont stocké les captures
-$Username = 'USER_SSH'; //Identifiant de connection SSH
-$Password ='PASSWORD_SSH'; //Mot de passe de connection SSH
 $Lien_Enreg = '/var/www/html/plugins/camera/data/records/NUM_DOSSIER_CAMERA/'; //Lien absolue (depuis la racine) vers les enregistrement
 $Nbr_Jour_A_Conserver = '8'; //Nombre de jour à conserver
 $Jour_Suppri_Sans_Tirait = date('omd',strtotime(date('omd')) - 72000 * $Nbr_Jour_A_Conserver) ; //Calcul du jour cible
@@ -8,18 +5,6 @@ $Jour_Suppri_Ajout_Tirait = substr_replace($Jour_Suppri_Sans_Tirait, "-", 4, 0);
 $Jour_Suppri_Avec_Tirait = substr_replace($Jour_Suppri_Ajout_Tirait, "-", 7, 0); // Ajout d'un tirait entre le mois et le jour
 $Commande_SSH = 'sudo rm'; //Commande SSH pour la suppression des fichiers
 $Command = $Commande_SSH." ".$Lien_Enreg."*".$Jour_Suppri_Avec_Tirait."*" ; //Definition de la commande SSH
-$scenario->setData('commande ssh camera NOM_CAMERA',$Command);
+$scenario->setLog($Command);
 
-$ssh = ssh2_connect($Hostname, 22);
-ssh2_auth_password($ssh, $Username, $Password);
-$stream = ssh2_exec($ssh, $Command);
-stream_set_blocking($stream, true);
-
-//renvoi la sortie de la commande si besoin
-$response = '';
-while($buffer = fread($stream, 4096)) {
-$response .= $buffer;
-}
-
-fclose($stream);
-echo $response;
+exec($Command);
