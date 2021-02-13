@@ -17,3 +17,5 @@ Pensez à bien remplacer dans les blocs code:
 - USER_SSH
 - PASSWORD_SSH
 - NUM_DOSSIER_CAMERA
+
+Edit: il n'y a pas besoin de connexion SSH lorsqu'on exécute les blocs pour la machine local, j'ai donc modifié les blocs pour supprimer le SSH
